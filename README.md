@@ -1,16 +1,77 @@
-# React + Vite
+# 🏋️ GYM PRIME
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sistema de gestión para gimnasio desarrollado con React y Tailwind CSS.
+Proyecto construido desde cero con fines de aprendizaje y uso real.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Tecnologías utilizadas
 
-## React Compiler
+- **React 18** — Librería para construir interfaces de usuario
+- **Tailwind CSS v4** — Framework de estilos utilitarios
+- **Vite** — Servidor de desarrollo ultrarrápido
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 📋 Funcionalidades actuales
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- ✅ Landing page pública (Navbar, Banner, Nosotros, Servicios, Footer)
+- ✅ Login con validación de credenciales
+- ✅ Dashboard con resumen de estadísticas
+- ✅ Navegación entre páginas sin librerías externas
+
+---
+
+## 🛠️ En desarrollo
+
+- 🔄 Módulo de clientes (registro, edición, listado)
+- 🔄 Módulo de pagos (registro de cobros y vencimientos)
+- 🔄 Navegación con React Router
+- 🔄 Conexión a base de datos real
+
+---
+
+## ▶️ Cómo correr el proyecto
+```bash
+# 1. Clona el repositorio
+git clone https://github.com/ALEXANDERZABALETA15/GYM-PRIME.git
+
+# 2. Entra a la carpeta
+cd GYM-PRIME
+
+# 3. Instala las dependencias
+npm install
+
+# 4. Corre el servidor de desarrollo
+npm run dev
+```
+
+Abre http://localhost:5173 en tu navegador.
+
+---
+
+## 🔐 Credenciales de prueba
+```
+Email:      admin@gym.com
+Contraseña: 1234
+```
+
+---
+
+## 📁 Estructura del proyecto
+```
+src/
+├── pages/
+│   ├── Landing.jsx    → Página pública de inicio
+│   ├── Login.jsx      → Autenticación de usuario
+│   └── Dashboard.jsx  → Panel principal del sistema
+├── App.jsx            → Navegación y control de páginas
+└── main.jsx           → Punto de entrada de la app
+```
+
+---
+
+## 👨‍💻 Autor
+
+**Jhon Alexander Zabaleta**
+[@ALEXANDERZABALETA15](https://github.com/ALEXANDERZABALETA15)
