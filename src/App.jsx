@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import Landing from "./pages/Landing"
 import Login from "./pages/Login"
-import Dasboard from "./pages/Dashboard"
+import Dashboard from "./pages/Dashboard"
+import WhatsAppButton from './components/WhatAppButton'
 
 
 function App() {
 
   // "pagina" guarda en qué pantalla estamos
-  // Empieza en "login" porque es lo primero que ve el usuario
+  // Empieza en "landing" porque es lo primero que ve el usuario
   const [pagina, setPagina] = useState("landing")
 
 
@@ -23,6 +24,8 @@ function App() {
       {pagina === "landing" && <Landing onIrALogin={() => navegarA("login")} />}
       {pagina === "login" && <Login onLoginExitoso={() => navegarA("dashboard")} />}
       {pagina === "dashboard" && <Dasboard onCerrarSesion={() => navegarA("landing")} />}
+
+      <WhatsAppButton />
     </div>
   )
 }

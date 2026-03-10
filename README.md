@@ -19,6 +19,7 @@ Proyecto construido desde cero con fines de aprendizaje y uso real.
 - ✅ Login con validación de credenciales
 - ✅ Dashboard con resumen de estadísticas
 - ✅ Navegación entre páginas sin librerías externas
+- ✅ Botón flotante de WhatsApp con mensaje predeterminado
 
 ---
 
