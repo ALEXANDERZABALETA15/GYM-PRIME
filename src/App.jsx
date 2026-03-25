@@ -1,29 +1,62 @@
-import { useState } from 'react'
+// src/App.jsx
+import { useState } from "react"
 import Landing from "./pages/Landing"
 import Login from "./pages/Login"
 import Dashboard from "./pages/Dashboard"
-import WhatsAppButton from './components/WhatAppButton'
-
+import Clientes from "./pages/Clientes"
+import WhatsAppButton from "./components/WhatsAppButton"
 
 function App() {
 
-  // "pagina" guarda en qué pantalla estamos
-  // Empieza en "landing" porque es lo primero que ve el usuario
-  const [pagina, setPagina] = useState("landing")
+  // Controla si estamos en área pública o privada
+  const [seccion, setSeccion] = useState("landing")
 
+  // Controla en qué página del panel admin estamos
+  // Lo subimos aquí para que Sidebar pueda cambiar entre páginas
+  const [paginaAdmin, setPaginaAdmin] = useState("dashboard")
 
-  // Esta función se la pasamos al Login
-  // Cuando el login sea exitoso, la llama y cambiamos a "dashboard"
-  function navegarA(destino){
-    setPagina(destino)
+  function navegarA(destino) {
+    setSeccion(destino)
   }
 
-  // Según el valor de "pagina", mostramos un componente u otro
+  // Esta función se la pasamos al Sidebar
+  // Cambia entre dashboard, clientes, pagos
+  function cambiarPagina(pagina) {
+    setPaginaAdmin(pagina)
+  }
+
+  // El área administrativa decide qué página mostrar
+  // según el valor de paginaAdmin
+  function renderAdmin() {
+    if (paginaAdmin === "dashboard") {
+      return (
+        <Dashboard
+          paginaActual={paginaAdmin}
+          navegarA={cambiarPagina}
+          onCerrarSesion={() => navegarA("landing")}
+        />
+      )
+    }
+    if (paginaAdmin === "clientes") {
+      return (
+        <Clientes
+          paginaActual={paginaAdmin}
+          navegarA={cambiarPagina}
+          onCerrarSesion={() => navegarA("landing")}
+        />
+      )
+    }
+  }
+
   return (
     <div>
-      {pagina === "landing" && <Landing onIrALogin={() => navegarA("login")} />}
-      {pagina === "login" && <Login onLoginExitoso={() => navegarA("dashboard")} />}
-      {pagina === "dashboard" && <Dashboard onCerrarSesion={() => navegarA("landing")} />}
+      {seccion === "landing" && (
+        <Landing onIrALogin={() => navegarA("login")} />
+      )}
+      {seccion === "login" && (
+        <Login onLoginExitoso={() => navegarA("admin")} />
+      )}
+      {seccion === "admin" && renderAdmin()}
 
       <WhatsAppButton />
     </div>
