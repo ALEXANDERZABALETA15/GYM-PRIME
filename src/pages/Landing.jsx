@@ -151,6 +151,47 @@ function Landing({onIrALogin}){
         </div>
       </section>
 
+        {/* ═══════════════════════════════
+           PLANES DE MEMBRESIA
+          ═══════════════════════════════ */}
+      <section className="py-20 px-6 bg-black border-t border-white">
+        <div>
+           {/* Encabezado */}
+          <div className="text-center mb-12">
+            <h3 className="text-3xl font-bold text-white mb-3">Nuestros planes 🏋️‍♂️. </h3>
+            <p className="text-white text-sm font-semibold">Elige el mejor plan que se adapte a ti.</p>
+          </div>
+
+          {/* Tarjetas de precios */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            
+            {/* Plan Básico */}
+            <div className="boder border-white rounded-2xl bg-white p-6 text-center hover:shadow-lg transition-shadow duration-200">
+              <p className="text-sm font-semibold text-black uppercase tracking-widest mb-2">PLAN BASICO</p>
+              <p className="text-4xl font-extrabold text-black">$70.000</p>
+              <p className="text-sm text-black mb-6 font-semibold">Por mes</p>
+
+            </div>
+            {/* Plan PREMIUM */}
+            <div className="boder border-white rounded-2xl bg-white p-6 text-center hover:shadow-lg transition-shadow duration-200">
+              <p>PLAN PREMIUM</p>
+              <p>$100.000</p>
+              <p>Por mes</p>
+
+            </div>
+            {/* Plan ANUAL */}
+            <div className="boder border-white rounded-2xl bg-white p-6 text-center hover:shadow-lg transition-shadow duration-200">
+              <p>PLAN ANUAL</p>
+              <p>$70.000</p>
+              <p>Anual</p>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
 
       {/* ═══════════════════════════════
            FOOTER

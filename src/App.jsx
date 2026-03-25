@@ -23,7 +23,7 @@ function App() {
     <div>
       {pagina === "landing" && <Landing onIrALogin={() => navegarA("login")} />}
       {pagina === "login" && <Login onLoginExitoso={() => navegarA("dashboard")} />}
-      {pagina === "dashboard" && <Dasboard onCerrarSesion={() => navegarA("landing")} />}
+      {pagina === "dashboard" && <Dashboard onCerrarSesion={() => navegarA("landing")} />}
 
       <WhatsAppButton />
     </div>
