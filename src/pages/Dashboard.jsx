@@ -3,12 +3,12 @@
 // Toda la info se calcula automáticamente desde los datos de clientes
 
 import { useState } from "react"
-import Sidebar from "../components/sidebar"
+import Sidebar from "../components/Sidebar"
 import { clientesIniciales, precios } from "../data/clientes"
 
-function Dashboard({ onCerrarSesion }) {
+function Dashboard({ paginaActual, navegarA, onCerrarSesion }) {
 
-  const [paginaActual, setPaginaActual] = useState("dashboard")
+  
   const [clientes] = useState(clientesIniciales)
 
   // ── CÁLCULOS AUTOMÁTICOS ──────────────────────────────
@@ -97,7 +97,7 @@ function Dashboard({ onCerrarSesion }) {
       {/* Sidebar */}
       <Sidebar
         paginaActual={paginaActual}
-        navegarA={setPaginaActual}
+        navegarA={navegarA }
         onCerrarSesion={onCerrarSesion}
       />
 
@@ -111,7 +111,7 @@ function Dashboard({ onCerrarSesion }) {
         {/* Encabezado */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-gray-800">
-            Buenos dia, Admin 👋
+            Buen día, Admin 👋.
           </h2>
           <p className="text-gray-500 mt-1">
             {hoy.toLocaleDateString("es-CO", {
