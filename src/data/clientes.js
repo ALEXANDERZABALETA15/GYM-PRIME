@@ -67,3 +67,49 @@ export const precios = {
   "Pro": 80000,
   "Premium": 120000
 }
+
+// ── PAGOS INICIALES ──────────────────────────────────
+// Cada pago tiene:
+// id          → identificador único del pago
+// clienteId   → conecta el pago con el cliente (relación)
+// monto       → cuánto pagó
+// fecha       → cuándo pagó
+// mes         → para filtrar por mes fácilmente
+// metodoPago  → efectivo, transferencia, etc.
+
+export const pagosIniciales = [
+  {
+    id: 1,
+    clienteId: 1,
+    // clienteId: 1 → este pago pertenece a Carlos (id: 1)
+    monto: 80000,
+    fecha: "2025-03-01",
+    mes: "2025-03",
+    metodoPago: "Efectivo"
+  },
+  {
+    id: 2,
+    clienteId: 2,
+    monto: 50000,
+    fecha: "2025-03-10",
+    mes: "2025-03",
+    metodoPago: "Transferencia"
+  },
+  {
+    id: 3,
+    clienteId: 4,
+    monto: 80000,
+    fecha: "2025-03-15",
+    mes: "2025-03",
+    metodoPago: "Efectivo"
+  },
+  {
+    id: 4,
+    clienteId: 5,
+    monto: 50000,
+    fecha: "2025-03-20",
+    mes: "2025-03",
+    metodoPago: "Efectivo"
+  }
+  // Nota: clienteId 3 (Juan) no tiene pago → aparecerá como "Sin pagar"
+]
