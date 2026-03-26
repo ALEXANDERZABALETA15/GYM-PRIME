@@ -1,6 +1,6 @@
 # 🏋️ GYM PRIME
 
-Sistema de gestión para gimnasio desarrollado con React y Tailwind CSS.
+Sistema de gestión para gimnasio de barrio desarrollado con React y Tailwind CSS.
 Proyecto construido desde cero con fines de aprendizaje y uso real.
 
 ---
@@ -15,20 +15,24 @@ Proyecto construido desde cero con fines de aprendizaje y uso real.
 
 ## 📋 Funcionalidades actuales
 
-- ✅ Landing page pública (Navbar, Banner, Nosotros, Servicios, Footer)
+- ✅ Landing page pública (Navbar, Banner, Nosotros, Servicios, Precios, Galería, Footer)
 - ✅ Login con validación de credenciales
-- ✅ Dashboard con resumen de estadísticas
-- ✅ Navegación entre páginas sin librerías externas
+- ✅ Dashboard con estadísticas en tiempo real
+- ✅ Sidebar responsive con menú hamburguesa en móvil
+- ✅ Módulo de clientes — CRUD completo (crear, editar, eliminar, buscar, filtrar)
+- ✅ Módulo de pagos — registro, historial y resumen mensual
+- ✅ Alertas de membresías por vencer y clientes sin pagar
 - ✅ Botón flotante de WhatsApp con mensaje predeterminado
+- ✅ Diseño responsive — móvil, tablet y desktop
 
 ---
 
 ## 🛠️ En desarrollo
 
-- 🔄 Módulo de clientes (registro, edición, listado)
-- 🔄 Módulo de pagos (registro de cobros y vencimientos)
+- 🔄 Conexión a base de datos real (Firebase)
+- 🔄 Importación de Excel con datos reales del gym
+- 🔄 Exportar reportes en PDF o Excel
 - 🔄 Navegación con React Router
-- 🔄 Conexión a base de datos real
 
 ---
 
@@ -62,12 +66,20 @@ Contraseña: 1234
 ## 📁 Estructura del proyecto
 ```
 src/
+├── components/
+│   ├── AdminLayout.jsx  → Layout compartido del panel admin
+│   ├── Sidebar.jsx      → Navegación lateral responsive
+│   └── WhatsAppButton.jsx → Botón flotante de WhatsApp
+├── data/
+│   └── clientes.js      → Base de datos en memoria (temporal)
 ├── pages/
-│   ├── Landing.jsx    → Página pública de inicio
-│   ├── Login.jsx      → Autenticación de usuario
-│   └── Dashboard.jsx  → Panel principal del sistema
-├── App.jsx            → Navegación y control de páginas
-└── main.jsx           → Punto de entrada de la app
+│   ├── Landing.jsx      → Página pública de inicio
+│   ├── Login.jsx        → Autenticación de usuario
+│   ├── Dashboard.jsx    → Panel principal con estadísticas
+│   ├── Clientes.jsx     → Gestión de socios (CRUD)
+│   └── Pagos.jsx        → Registro y historial de pagos
+├── App.jsx              → Navegación y control de páginas
+└── main.jsx             → Punto de entrada de la app
 ```
 
 ---
