@@ -10,6 +10,7 @@
 import { useState } from "react"
 import Sidebar from "../components/Sidebar"
 import { clientesIniciales, pagosIniciales, precios } from "../data/clientes"
+import AdminLayout from "../components/AdminLayout"
 
 function Pagos({ paginaActual, navegarA, onCerrarSesion }) {
 
@@ -132,187 +133,190 @@ function Pagos({ paginaActual, navegarA, onCerrarSesion }) {
   }
 
   // ── VISTA ─────────────────────────────────────────────
-  return (
-    <div className="flex h-screen bg-gray-100 overflow-hidden">
+   return (
+    // ✅ CAMBIO: antes era <div className="flex h-screen bg-gray-100 overflow-hidden">
+    //           con <Sidebar> y <main> por separado
+    //           Ahora AdminLayout lo maneja todo internamente
+    <AdminLayout
+      paginaActual={paginaActual}
+      navegarA={navegarA}
+      onCerrarSesion={onCerrarSesion}
+    >
+      {/* ✅ CAMBIO: todo este contenido antes estaba dentro de <main>
+          Ahora va directo como children de AdminLayout
+          AdminLayout se encarga de ponerlo dentro del <main> */}
 
-      <Sidebar
-        paginaActual={paginaActual}
-        navegarA={navegarA}
-        onCerrarSesion={onCerrarSesion}
-      />
+      {/* Encabezado */}
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-800">💰 Pagos</h2>
+          <p className="text-gray-500 text-sm mt-1">
+            Historial y registro de cobros
+          </p>
+        </div>
+        <button
+          onClick={() => setModalAbierto(true)}
+          className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-xl text-sm transition-colors duration-200"
+        >
+          + Registrar pago
+        </button>
+      </div>
 
-      <main className="flex-1 overflow-y-auto p-8">
+      {/* Tarjetas resumen */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
 
-        {/* Encabezado */}
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h2 className="text-2xl font-bold text-gray-800">💰 Pagos</h2>
-            <p className="text-gray-500 text-sm mt-1">
-              Historial y registro de cobros
-            </p>
+        <div className="bg-white rounded-2xl p-6 shadow-sm">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-green-50 mb-4">
+            <span className="text-2xl">💵</span>
           </div>
-          <button
-            onClick={() => setModalAbierto(true)}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-xl text-sm transition-colors duration-200"
-          >
-            + Registrar pago
-          </button>
+          <p className="text-2xl font-bold text-green-600">
+            {formatoPeso(totalRecaudado)}
+          </p>
+          <p className="text-sm text-gray-500 mt-1">Recaudado este mes</p>
         </div>
 
-        {/* Tarjetas resumen */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-
-          <div className="bg-white rounded-2xl p-6 shadow-sm">
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-green-50 mb-4">
-              <span className="text-2xl">💵</span>
-            </div>
-            <p className="text-2xl font-bold text-green-600">
-              {formatoPeso(totalRecaudado)}
-            </p>
-            <p className="text-sm text-gray-500 mt-1">Recaudado este mes</p>
+        <div className="bg-white rounded-2xl p-6 shadow-sm">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-blue-50 mb-4">
+            <span className="text-2xl">📋</span>
           </div>
-
-          <div className="bg-white rounded-2xl p-6 shadow-sm">
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-blue-50 mb-4">
-              <span className="text-2xl">📋</span>
-            </div>
-            <p className="text-2xl font-bold text-blue-600">
-              {pagosMesActual.length}
-            </p>
-            <p className="text-sm text-gray-500 mt-1">Pagos registrados</p>
-          </div>
-
-          <div className="bg-white rounded-2xl p-6 shadow-sm">
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-red-50 mb-4">
-              <span className="text-2xl">❌</span>
-            </div>
-            <p className="text-2xl font-bold text-red-500">
-              {clientesSinPagar.length}
-            </p>
-            <p className="text-sm text-gray-500 mt-1">Clientes sin pagar</p>
-          </div>
-
+          <p className="text-2xl font-bold text-blue-600">
+            {pagosMesActual.length}
+          </p>
+          <p className="text-sm text-gray-500 mt-1">Pagos registrados</p>
         </div>
 
-        {/* Clientes sin pagar — alerta */}
-        {clientesSinPagar.length > 0 && (
-          <div className="bg-red-50 border border-red-200 rounded-2xl p-6 mb-8">
-            <h3 className="font-bold text-red-700 mb-3">
-              ❌ Clientes sin pagar este mes
-            </h3>
-            <div className="space-y-2">
-              {clientesSinPagar.map(c => (
-                <div key={c.id} className="flex items-center justify-between bg-white rounded-xl px-4 py-3">
-                  <div>
-                    <p className="font-medium text-gray-800">{c.nombre}</p>
-                    <p className="text-xs text-gray-500">Plan {c.plan} · 📞 {c.telefono}</p>
-                  </div>
-                  <span className="text-sm font-semibold text-red-500">
-                    {formatoPeso(precios[c.plan])}
-                  </span>
+        <div className="bg-white rounded-2xl p-6 shadow-sm">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-red-50 mb-4">
+            <span className="text-2xl">❌</span>
+          </div>
+          <p className="text-2xl font-bold text-red-500">
+            {clientesSinPagar.length}
+          </p>
+          <p className="text-sm text-gray-500 mt-1">Clientes sin pagar</p>
+        </div>
+
+      </div>
+
+      {/* Clientes sin pagar — alerta */}
+      {clientesSinPagar.length > 0 && (
+        <div className="bg-red-50 border border-red-200 rounded-2xl p-6 mb-8">
+          <h3 className="font-bold text-red-700 mb-3">
+            ❌ Clientes sin pagar este mes
+          </h3>
+          <div className="space-y-2">
+            {clientesSinPagar.map(c => (
+              <div key={c.id} className="flex items-center justify-between bg-white rounded-xl px-4 py-3">
+                <div>
+                  <p className="font-medium text-gray-800">{c.nombre}</p>
+                  <p className="text-xs text-gray-500">Plan {c.plan} · 📞 {c.telefono}</p>
                 </div>
-              ))}
-            </div>
+                <span className="text-sm font-semibold text-red-500">
+                  {formatoPeso(precios[c.plan])}
+                </span>
+              </div>
+            ))}
           </div>
-        )}
+        </div>
+      )}
 
-        {/* Filtro por mes */}
-        <div className="flex items-center gap-3 mb-4">
-          <span className="text-sm text-gray-500 font-medium">Filtrar por mes:</span>
-          <div className="flex gap-2">
+      {/* Filtro por mes */}
+      <div className="flex items-center gap-3 mb-4">
+        <span className="text-sm text-gray-500 font-medium">Filtrar por mes:</span>
+        <div className="flex gap-2">
+          <button
+            onClick={() => setFiltroMes("todos")}
+            className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors
+              ${filtroMes === "todos"
+                ? "bg-blue-600 text-white"
+                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+              }`}
+          >
+            Todos
+          </button>
+          {mesesDisponibles.map(mes => (
             <button
-              onClick={() => setFiltroMes("todos")}
+              key={mes}
+              onClick={() => setFiltroMes(mes)}
               className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors
-                ${filtroMes === "todos"
+                ${filtroMes === mes
                   ? "bg-blue-600 text-white"
                   : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                 }`}
             >
-              Todos
+              {mes}
             </button>
-            {mesesDisponibles.map(mes => (
-              <button
-                key={mes}
-                onClick={() => setFiltroMes(mes)}
-                className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors
-                  ${filtroMes === mes
-                    ? "bg-blue-600 text-white"
-                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                  }`}
-              >
-                {mes}
-              </button>
-            ))}
-          </div>
+          ))}
         </div>
+      </div>
 
-        {/* Tabla de pagos */}
-        <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+      {/* Tabla de pagos */}
+      <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
 
-              <thead className="bg-gray-50 border-b border-gray-100">
-                <tr className="text-left text-gray-500">
-                  <th className="px-6 py-4 font-medium">Cliente</th>
-                  <th className="px-6 py-4 font-medium">Plan</th>
-                  <th className="px-6 py-4 font-medium">Monto</th>
-                  <th className="px-6 py-4 font-medium">Fecha</th>
-                  <th className="px-6 py-4 font-medium">Método</th>
-                  <th className="px-6 py-4 font-medium">Acciones</th>
+            <thead className="bg-gray-50 border-b border-gray-100">
+              <tr className="text-left text-gray-500">
+                <th className="px-6 py-4 font-medium">Cliente</th>
+                <th className="px-6 py-4 font-medium">Plan</th>
+                <th className="px-6 py-4 font-medium">Monto</th>
+                <th className="px-6 py-4 font-medium">Fecha</th>
+                <th className="px-6 py-4 font-medium">Método</th>
+                <th className="px-6 py-4 font-medium">Acciones</th>
+              </tr>
+            </thead>
+
+            <tbody className="divide-y divide-gray-50">
+              {pagosFiltrados.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="px-6 py-12 text-center text-gray-400">
+                    No hay pagos registrados.
+                  </td>
                 </tr>
-              </thead>
-
-              <tbody className="divide-y divide-gray-50">
-                {pagosFiltrados.length === 0 ? (
-                  <tr>
-                    <td colSpan={6} className="px-6 py-12 text-center text-gray-400">
-                      No hay pagos registrados.
+              ) : (
+                pagosFiltrados.map(p => (
+                  <tr key={p.id} className="hover:bg-gray-50 transition-colors">
+                    <td className="px-6 py-4 font-medium text-gray-800">
+                      {nombreCliente(p.clienteId)}
+                    </td>
+                    <td className="px-6 py-4 text-gray-500">
+                      {planCliente(p.clienteId)}
+                    </td>
+                    <td className="px-6 py-4 font-semibold text-green-600">
+                      {formatoPeso(p.monto)}
+                    </td>
+                    <td className="px-6 py-4 text-gray-500">
+                      {new Date(p.fecha).toLocaleDateString("es-CO")}
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className={`px-3 py-1 rounded-full text-xs font-semibold
+                        ${p.metodoPago === "Efectivo"
+                          ? "bg-green-100 text-green-600"
+                          : "bg-blue-100 text-blue-600"
+                        }`}>
+                        {p.metodoPago}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <button
+                        onClick={() => eliminarPago(p.id)}
+                        className="text-red-500 hover:bg-red-50 px-3 py-1 rounded-lg text-xs font-medium transition-colors"
+                      >
+                        🗑️ Eliminar
+                      </button>
                     </td>
                   </tr>
-                ) : (
-                  pagosFiltrados.map(p => (
-                    <tr key={p.id} className="hover:bg-gray-50 transition-colors">
-                      <td className="px-6 py-4 font-medium text-gray-800">
-                        {nombreCliente(p.clienteId)}
-                      </td>
-                      <td className="px-6 py-4 text-gray-500">
-                        {planCliente(p.clienteId)}
-                      </td>
-                      <td className="px-6 py-4 font-semibold text-green-600">
-                        {formatoPeso(p.monto)}
-                      </td>
-                      <td className="px-6 py-4 text-gray-500">
-                        {new Date(p.fecha).toLocaleDateString("es-CO")}
-                      </td>
-                      <td className="px-6 py-4">
-                        <span className={`px-3 py-1 rounded-full text-xs font-semibold
-                          ${p.metodoPago === "Efectivo"
-                            ? "bg-green-100 text-green-600"
-                            : "bg-blue-100 text-blue-600"
-                          }`}>
-                          {p.metodoPago}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4">
-                        <button
-                          onClick={() => eliminarPago(p.id)}
-                          className="text-red-500 hover:bg-red-50 px-3 py-1 rounded-lg text-xs font-medium transition-colors"
-                        >
-                          🗑️ Eliminar
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
+                ))
+              )}
+            </tbody>
 
-            </table>
-          </div>
+          </table>
         </div>
-
-      </main>
+      </div>
 
       {/* ── MODAL — Registrar pago ───────────────────── */}
+      {/* ✅ CAMBIO: el modal se queda aquí dentro de AdminLayout
+          Funciona igual porque usa "fixed" que lo saca del flujo normal
+          y lo pone encima de todo con z-50 */}
       {modalAbierto && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
           <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
@@ -331,7 +335,6 @@ function Pagos({ paginaActual, navegarA, onCerrarSesion }) {
 
             <div className="space-y-4">
 
-              {/* Selector de cliente */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Cliente
@@ -350,7 +353,6 @@ function Pagos({ paginaActual, navegarA, onCerrarSesion }) {
                 </select>
               </div>
 
-              {/* Método de pago */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Método de pago
@@ -367,7 +369,6 @@ function Pagos({ paginaActual, navegarA, onCerrarSesion }) {
                 </select>
               </div>
 
-              {/* Fecha del pago */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Fecha del pago
@@ -380,7 +381,6 @@ function Pagos({ paginaActual, navegarA, onCerrarSesion }) {
                 />
               </div>
 
-              {/* Vista previa del monto */}
               {formulario.clienteId && (
                 <div className="bg-green-50 border border-green-200 rounded-xl px-4 py-3">
                   <p className="text-sm text-green-700">
@@ -389,7 +389,6 @@ function Pagos({ paginaActual, navegarA, onCerrarSesion }) {
                       {formatoPeso(precios[planCliente(Number(formulario.clienteId))])}
                     </span>
                   </p>
-                  {/* Muestra el monto automáticamente según el plan del cliente */}
                 </div>
               )}
 
@@ -414,7 +413,8 @@ function Pagos({ paginaActual, navegarA, onCerrarSesion }) {
         </div>
       )}
 
-    </div>
+    </AdminLayout>
+    // ✅ CAMBIO: antes cerraba </div> — ahora cierra </AdminLayout>
   )
 }
 

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import Sidebar from "../components/Sidebar"
+import AdminLayout from "../components/AdminLayout" 
 import { clientesIniciales } from "../data/clientes"
 
 function Clientes({ paginaActual, navegarA, onCerrarSesion }) {
@@ -157,138 +157,141 @@ function Clientes({ paginaActual, navegarA, onCerrarSesion }) {
   // ── VISTA ─────────────────────────────────────────────
 
   return (
-    <div className="flex h-screen bg-gray-100 overflow-hidden">
+    // ✅ CAMBIO: antes era <div className="flex h-screen bg-gray-100 overflow-hidden">
+    //           con <AdminLayout> y <main> por separado
+    //           Ahora AdminLayout lo maneja todo internamente
+    <AdminLayout
+      paginaActual={paginaActual}
+      navegarA={navegarA}
+      onCerrarSesion={onCerrarSesion}
+    >
+      {/* ✅ CAMBIO: todo este contenido antes estaba dentro de <main>
+          Ahora va directo como children de AdminLayout
+          AdminLayout se encarga de ponerlo dentro del <main> */}
 
-      <Sidebar
-        paginaActual={paginaActual}
-        navegarA={navegarA}
-        onCerrarSesion={onCerrarSesion}
-      />
-
-      <main className="flex-1 overflow-y-auto p-8">
-
-        {/* Encabezado */}
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h2 className="text-2xl font-bold text-gray-800">👥 Clientes</h2>
-            <p className="text-gray-500 text-sm mt-1">
-              {clientes.length} clientes registrados
-            </p>
-          </div>
-          <button
-            onClick={abrirModalNuevo}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-xl text-sm transition-colors duration-200"
-          >
-            + Nuevo cliente
-          </button>
+      {/* Encabezado */}
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-800">👥 Clientes</h2>
+          <p className="text-gray-500 text-sm mt-1">
+            {clientes.length} clientes registrados
+          </p>
         </div>
+        <button
+          onClick={abrirModalNuevo}
+          className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-xl text-sm transition-colors duration-200"
+        >
+          + Nuevo cliente
+        </button>
+      </div>
 
-        {/* Buscador y filtros */}
-        <div className="bg-white rounded-2xl shadow-sm p-4 mb-6 flex flex-col sm:flex-row gap-4">
+      {/* Buscador y filtros */}
+      <div className="bg-white rounded-2xl shadow-sm p-4 mb-6 flex flex-col sm:flex-row gap-4">
 
-          {/* Input de búsqueda */}
-          <input
-            type="text"
-            placeholder="🔍 Buscar por nombre o teléfono..."
-            value={busqueda}
-            onChange={(e) => setBusqueda(e.target.value)}
-            className="flex-1 border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+        {/* Input de búsqueda */}
+        <input
+          type="text"
+          placeholder="🔍 Buscar por nombre o teléfono..."
+          value={busqueda}
+          onChange={(e) => setBusqueda(e.target.value)}
+          className="flex-1 border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
 
-          {/* Botones de filtro */}
-          <div className="flex gap-2">
-            {["todos", "activos", "vencidos"].map(f => (
-              <button
-                key={f}
-                onClick={() => setFiltro(f)}
-                className={`px-4 py-2 rounded-xl text-sm font-medium capitalize transition-colors duration-200
-                  ${filtro === f
-                    ? "bg-blue-600 text-white"
-                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                  }`}
-              >
-                {f}
-              </button>
-            ))}
-          </div>
+        {/* Botones de filtro */}
+        <div className="flex gap-2">
+          {["todos", "activos", "vencidos"].map(f => (
+            <button
+              key={f}
+              onClick={() => setFiltro(f)}
+              className={`px-4 py-2 rounded-xl text-sm font-medium capitalize transition-colors duration-200
+                ${filtro === f
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                }`}
+            >
+              {f}
+            </button>
+          ))}
         </div>
+      </div>
 
-        {/* Tabla de clientes */}
-        <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+      {/* Tabla de clientes */}
+      <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
 
-              <thead className="bg-gray-50 border-b border-gray-100">
-                <tr className="text-left text-gray-500">
-                  <th className="px-6 py-4 font-medium">Nombre</th>
-                  <th className="px-6 py-4 font-medium">Teléfono</th>
-                  <th className="px-6 py-4 font-medium">Plan</th>
-                  <th className="px-6 py-4 font-medium">Vencimiento</th>
-                  <th className="px-6 py-4 font-medium">Estado</th>
-                  <th className="px-6 py-4 font-medium">Acciones</th>
+            <thead className="bg-gray-50 border-b border-gray-100">
+              <tr className="text-left text-gray-500">
+                <th className="px-6 py-4 font-medium">Nombre</th>
+                <th className="px-6 py-4 font-medium">Teléfono</th>
+                <th className="px-6 py-4 font-medium">Plan</th>
+                <th className="px-6 py-4 font-medium">Vencimiento</th>
+                <th className="px-6 py-4 font-medium">Estado</th>
+                <th className="px-6 py-4 font-medium">Acciones</th>
+               </tr>
+            </thead>
+
+            <tbody className="divide-y divide-gray-50">
+              {clientesFiltrados.length === 0 ? (
+                // Si no hay resultados mostramos un mensaje
+                <tr>
+                  <td colSpan={6} className="px-6 py-12 text-center text-gray-400">
+                    {/* colSpan → la celda ocupa todas las columnas */}
+                    No se encontraron clientes.
+                  </td>
                 </tr>
-              </thead>
+              ) : (
+                clientesFiltrados.map(c => {
+                  const estado = estadoCliente(c.fechaVencimiento)
+                  return (
+                    <tr key={c.id} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-6 py-4 font-medium text-gray-800">
+                        {c.nombre}
+                      </td>
+                      <td className="px-6 py-4 text-gray-500">
+                        {c.telefono}
+                      </td>
+                      <td className="px-6 py-4 text-gray-500">
+                        {c.plan}
+                      </td>
+                      <td className="px-6 py-4 text-gray-500">
+                        {new Date(c.fechaVencimiento).toLocaleDateString("es-CO")}
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${estado.estilo}`}>
+                          {estado.texto}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => abrirModalEditar(c)}
+                            className="text-blue-600 hover:bg-blue-50 px-3 py-1 rounded-lg text-xs font-medium transition-colors"
+                          >
+                            ✏️ Editar
+                          </button>
+                          <button
+                            onClick={() => eliminarCliente(c.id)}
+                            className="text-red-500 hover:bg-red-50 px-3 py-1 rounded-lg text-xs font-medium transition-colors"
+                          >
+                            🗑️ Eliminar
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  )
+                })
+              )}
+            </tbody>
 
-              <tbody className="divide-y divide-gray-50">
-                {clientesFiltrados.length === 0 ? (
-                  // Si no hay resultados mostramos un mensaje
-                  <tr>
-                    <td colSpan={6} className="px-6 py-12 text-center text-gray-400">
-                      {/* colSpan → la celda ocupa todas las columnas */}
-                      No se encontraron clientes.
-                    </td>
-                  </tr>
-                ) : (
-                  clientesFiltrados.map(c => {
-                    const estado = estadoCliente(c.fechaVencimiento)
-                    return (
-                      <tr key={c.id} className="hover:bg-gray-50 transition-colors">
-                        <td className="px-6 py-4 font-medium text-gray-800">
-                          {c.nombre}
-                        </td>
-                        <td className="px-6 py-4 text-gray-500">
-                          {c.telefono}
-                        </td>
-                        <td className="px-6 py-4 text-gray-500">
-                          {c.plan}
-                        </td>
-                        <td className="px-6 py-4 text-gray-500">
-                          {new Date(c.fechaVencimiento).toLocaleDateString("es-CO")}
-                        </td>
-                        <td className="px-6 py-4">
-                          <span className={`px-3 py-1 rounded-full text-xs font-semibold ${estado.estilo}`}>
-                            {estado.texto}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4">
-                          <div className="flex gap-2">
-                            <button
-                              onClick={() => abrirModalEditar(c)}
-                              className="text-blue-600 hover:bg-blue-50 px-3 py-1 rounded-lg text-xs font-medium transition-colors"
-                            >
-                              ✏️ Editar
-                            </button>
-                            <button
-                              onClick={() => eliminarCliente(c.id)}
-                              className="text-red-500 hover:bg-red-50 px-3 py-1 rounded-lg text-xs font-medium transition-colors"
-                            >
-                              🗑️ Eliminar
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    )
-                  })
-                )}
-              </tbody>
-
-            </table>
-          </div>
+          </table>
         </div>
-
-      </main>
+      </div>
 
       {/* ── MODAL — Crear / Editar cliente ────────────── */}
+      {/* ✅ CAMBIO: el modal se queda aquí dentro de AdminLayout
+          Funciona igual porque usa "fixed" que lo saca del flujo normal
+          y lo pone encima de todo con z-50 */}
       {modalAbierto && (
         // El && hace que el modal solo se renderice cuando está abierto
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
@@ -404,7 +407,8 @@ function Clientes({ paginaActual, navegarA, onCerrarSesion }) {
         </div>
       )}
 
-    </div>
+    </AdminLayout>
+    // ✅ CAMBIO: antes cerraba </div> — ahora cierra </AdminLayout>
   )
 }
 
