@@ -11,6 +11,7 @@ function Sidebar({ paginaActual, navegarA, onCerrarSesion, abierto, onCerrar }) 
     { id: "dashboard", label: "Dashboard", icono: "📊" },
     { id: "clientes",  label: "Clientes",  icono: "👥" },
     { id: "pagos",     label: "Pagos",     icono: "💰" },
+    { id: "inventario", label: "Inventario", icono: "📦" },
   ]
 
   function handleNavegar(id) {
